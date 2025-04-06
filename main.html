@@ -1,20 +1,47 @@
 <!DOCTYPE html>
-
 <html>
   <head>
     <link rel="stylesheet" href="styles.css" />
   </head>
-
   <body>
     <form>
-		<label id="age">Age:</label>
-		<input id="age" type="number">
-		
-		<label id="name">Name:</label>
-		<input id="name" type="text">
-	   <button id="btn" type="submit">Submit</button>
-	</form>
+      <label for="age">Age:</label>
+      <input id="age" type="number">
+      
+      <label for="name">Name:</label>
+      <input id="name" type="text">
+      
+      <button id="btn" type="submit">Submit</button>
+    </form>
+       
+    <script type="text/javascript">
+	document.getElementById("btn").addEventListener("click", function (e) {
+        e.preventDefault(); // Prevent page refresh
 
-    <script type="text/javascript" src="./script.js"></script>
+        const age = document.getElementById("age").value.trim();
+        const name = document.getElementById("name").value.trim();
+
+        if (!age || !name) {
+          alert("Please enter valid details.");
+          return;
+        }
+
+        const ageNumber = parseInt(age, 10);
+
+        const checkAge = new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (ageNumber > 18) {
+              resolve(`Welcome, ${name}. You can vote.`);
+            } else {
+              reject(`Oh sorry ${name}. You aren't old enough.`);
+            }
+          }, 2000);
+        });
+
+        checkAge
+          .then((msg) => alert(msg))
+          .catch((err) => alert(err));
+      });
+    </script>
   </body>
 </html>
